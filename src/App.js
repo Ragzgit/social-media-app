@@ -6,6 +6,7 @@ import Rightbar from './Components/Rightside/rightbar';
 import Home from './Routes/Home/home';
 import Profile from './Routes/UserProfile/profile';
 import "./style.scss";
+import { DarkModeContext } from "./context/viewModeContext";
 
 import {
   createBrowserRouter,
@@ -14,27 +15,32 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-const Layout = () => (
-  <div className='theme-light'>
-    <Navbar />
-    <div style={{display: "flex"}}>
-      <Leftbar />
-      <Outlet />
-      <Rightbar />
-    </div>
-  </div>
-)
+import { useContext } from 'react';
 
-const userLoggedIn = true;
-
-const ProtectedLogin = ({children}) => {
-  if(!userLoggedIn){
-    return <Navigate to="/login" />;
-  }
-  return children;
-}
 
 function App() {
+  const { darkMode } = useContext(DarkModeContext);
+
+  const Layout = () => (
+    <div className={`theme-${darkMode ? "dark" : "light"}`}>
+      <Navbar />
+      <div style={{display: "flex"}}>
+        {/* <Leftbar /> */}
+        <Outlet />
+        {/* <Rightbar /> */}
+      </div>
+    </div>
+  )
+
+  const userLoggedIn = true;
+
+  const ProtectedLogin = ({children}) => {
+    if(!userLoggedIn){
+      return <Navigate to="/login" />;
+    }
+    return children;
+  }
+
   const router = createBrowserRouter([
     {
       path: "/login",
