@@ -10,7 +10,7 @@
       display: flex;
       background-color: white;
       border-radius: 10px;
-    //   min-height: 600px;
+      min-height: 600px;
       overflow: hidden;
   
       .left {
@@ -25,7 +25,7 @@
         flex-direction: column;
         gap: 30px;
         color: white;
-        // max-width: fit-content;
+        max-width: fit-content;
   
         h1 {
           font-size: 70px;

@@ -7,7 +7,7 @@ import Home from './Routes/Home/home';
 import Profile from './Routes/UserProfile/profile';
 import "./style.scss";
 import { DarkModeContext } from "./context/viewModeContext";
-
+import { AuthContext } from './context/authContext';
 import {
   createBrowserRouter,
   Navigate,
@@ -20,22 +20,22 @@ import { useContext } from 'react';
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
-
+  const {currentUser} = useContext(AuthContext);
   const Layout = () => (
     <div className={`theme-${darkMode ? "dark" : "light"}`}>
       <Navbar />
       <div style={{display: "flex"}}>
-        {/* <Leftbar /> */}
-        <Outlet />
-        {/* <Rightbar /> */}
+        <Leftbar />
+        <div style={{ flex: 6 }}>
+            <Outlet />
+        </div>
+        <Rightbar />
       </div>
     </div>
   )
 
-  const userLoggedIn = true;
-
   const ProtectedLogin = ({children}) => {
-    if(!userLoggedIn){
+    if(!currentUser){
       return <Navigate to="/login" />;
     }
     return children;
@@ -52,7 +52,7 @@ function App() {
     },
     {
       path: "/",
-      element: <ProtectedLogin><Layout /> </ProtectedLogin>,
+      element: <ProtectedLogin> <Layout /> </ProtectedLogin>,
       children: [{
         path: "/",
         element: <Home />

@@ -9,9 +9,16 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import SearchIcon from '@mui/icons-material/Search';
 import {Link} from 'react-router-dom';
 import { DarkModeContext } from "../../context/viewModeContext";
+import { AuthContext } from "../../context/authContext";
 import { useContext } from "react";
+
+// import 
+
+
 function Navbar() {
+
     const {toggle, darkMode} = useContext(DarkModeContext);
+    const {currentUser} = useContext(AuthContext);
     return (  
         <div className="navbar">
             <div className="left">
@@ -31,11 +38,11 @@ function Navbar() {
                 <EmailOutlinedIcon />
                 <NotificationsOutlinedIcon />
                 <div className="user">
-                {/* <img
-                    src=""
+                <img
+                    src={currentUser.profilePic}
                     alt=""
-                /> */}
-                <span>Profile 1</span>
+                />
+                <span>{currentUser.name}</span>
                 </div>
             </div>
         </div>
